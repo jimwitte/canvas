@@ -1,0 +1,15 @@
+alpha:
+  day: Wed
+  time: "09:00"
+beta:
+  day: Wed
+  time: "10:00"
+gamma:
+  day: Tue
+  time: "16:00"
+delta:
+  day: Wed
+  time: "9:00"
+omega:
+  day: Mon
+  time: "12:00"
