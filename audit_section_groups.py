@@ -38,11 +38,9 @@ if __name__ == "__main__":
         section_members.discard(125495) # remove the test student if present
         if section_members == group_members:
             print(f"{group.name} -> OK")
-        # if len(section_members - group_members) > 0:
         for user_id in (section_members - group_members):
             user = course.get_user(user_id)
             print(f'{group.name} -> add {user}')
-        # if len(group_members - section_members) > 0:
         for user_id in (group_members - section_members):
             user = course.get_user(user_id)
             print(f'{group.name} -> remove {user} ')
