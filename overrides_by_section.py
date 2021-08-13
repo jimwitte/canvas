@@ -10,8 +10,8 @@ if __name__ == "__main__":
     API_KEY = os.environ.get('API_KEY', None)
     MIN_DUE = os.environ.get('MIN_DUE', None)
     CANVAS_COURSE_ID = os.environ.get('CANVAS_COURSE_ID', None)
-    SECTION_FILE = os.environ.get('SECTION_FILE', None)
-
+    SECTION_FILE = os.environ.get('SECTIONS_FILE', None)
+    
     if not all([API_URL, API_KEY, MIN_DUE, CANVAS_COURSE_ID, SECTION_FILE]):
         print("Missing connection parameter(s). Need to source env file. Exiting.")
         exit(1)
@@ -33,8 +33,8 @@ if __name__ == "__main__":
         dow_map = {1:'Mon', 2:'Tue', 3:'Wed', 4:'Thu', 5:'Fri', 6:'Sat', 7:'Sun'}
         return dow_map[dow]
 
-    print("Create a week of Canvas overrides by section based on meeting day/time.")
-    print(f"Due times are {MIN_DUE} minutes before the section meets.\n")
+    print("Create a week (7 days) of Canvas overrides by section for an assignment based on section meeting day/time.")
+    print(f"Assignments due at the time when the section meets that week.\n")
 
     print(f"Assignments for course: {course}")
 
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     for a in assignments:
       print(a)
 
-    assignmentID = input(f"Create overrides for this assignment ID (ENTER = {assignments[0].id}): ")
+    assignmentID = input(f"Create overrides for which assignment ID? (ENTER = {assignments[0].id}): ")
     if assignmentID == '':
         assignmentID = assignments[0].id
 
@@ -72,8 +72,8 @@ if __name__ == "__main__":
             sectionTime = filtered_sections[section]['time']
             sectionDay = filtered_sections[section]['day']
             assignment_date_time_str = assignment_date.strftime("%Y-%m-%d " + sectionTime)
-            assignment_date_time = dt.datetime.strptime(assignment_date_time_str, '%Y-%m-%d %H:%M') - (MIN_DUE * minDelta)
-            print(f'Create override for section "{section}" {sectionTime} {sectionDay} -> DUE DATE/TIME {assignment_date_time} for assignment {assignmentID} & SECTIONID: {course_sections[section]}')
+            assignment_date_time = dt.datetime.strptime(assignment_date_time_str, '%Y-%m-%d %H:%M') # - (MIN_DUE * minDelta)
+            print(f'Created override for "{section}" {sectionTime} {sectionDay} -> DUE DATE/TIME {assignment_date_time} assignment: {assignmentID} SECTIONID: {course_sections[section]}')
             assignment.create_override(
                 assignment_override = {
                     'course_section_id': course_sections[section],
