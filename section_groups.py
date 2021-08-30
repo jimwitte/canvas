@@ -34,7 +34,7 @@ if __name__ == "__main__":
     print()
 
     print("Group name prefix + section name = group name")
-    group_name_prefix = input('Enter group name prefix (like "LAS100 Sec"): ')
+    group_name_prefix = input('Enter group name prefix (like "LAS100"): ')
     print()
     
     sections = course.get_sections()
@@ -45,12 +45,11 @@ if __name__ == "__main__":
         name=group_name,
         description=section.id
       )
-      print()
-      print(f"created group: {group}")
+      print(f"CREATE group: {group}")
 
       enrollments = section.get_enrollments()
       for enrollment in enrollments:
-          if enrollment.user_id != 125495: # do not add test student id 125495
+          if enrollment.user['name'] != 'Test Student' and enrollment.enrollment_state == 'active' and enrollment.type == 'StudentEnrollment':
             group.create_membership(enrollment.user_id)
-            print(f"create group membership for: {enrollment.user['name']} {enrollment.user_id} {enrollment.role}")
-            time.sleep(.5)
+            print(f"    GROUP ADD: {enrollment.user['name']} {enrollment.user_id} {enrollment.role}")
+            time.sleep(.25)
