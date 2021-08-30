@@ -75,9 +75,9 @@ if __name__ == "__main__":
             assignment_date_time = dt.datetime.strptime(assignment_date_time_str, '%Y-%m-%d %H:%M') # - (MIN_DUE * minDelta)
             print(f'Created override for "{section}" {sectionTime} {sectionDay} -> DUE DATE/TIME {assignment_date_time} assignment: {assignmentID} SECTIONID: {course_sections[section]}')
             assignment.create_override(
-                assignment_override = {
+                assignment_override={
                     'course_section_id': course_sections[section],
                     'due_at': assignment_date_time,
                 }
             )
-            time.sleep(1)
+            time.sleep(.25)
