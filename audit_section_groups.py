@@ -34,14 +34,14 @@ if __name__ == "__main__":
         sectionid = int(group.description)  #sectionid stored in group description field
         section = course.get_section(sectionid)
         enrollments = section.get_enrollments()
-        section_members = set([int(enrollment.user_id) for enrollment in enrollments])
-        section_members.discard(125495) # remove the test student if present
+        section_members = set([int(enrollment.user_id) for enrollment in enrollments if enrollment.type == 'StudentEnrollment' and enrollment.enrollment_state == 'active'])
         if section_members == group_members:
             print(f"{group.name} -> OK")
         for user_id in (section_members - group_members):
             user = course.get_user(user_id)
-            print(f'{group.name} -> add {user}')
+            print(f'{group.name} -> added {user}')
+            group.create_membership(user_id)
         for user_id in (group_members - section_members):
             user = course.get_user(user_id)
-            print(f'{group.name} -> remove {user} ')
-        time.sleep(1)
+            print(f'{group.name} -> notice: extra user in group. {user} ')
+        time.sleep(.25)
