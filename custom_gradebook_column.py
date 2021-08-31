@@ -42,7 +42,7 @@ if __name__ == "__main__":
         metadata = section_metadata.get(section.name, None)
         if metadata:
             for enrollment in enrollments:
-                if enrollment.user['name'] != 'Test Student' and enrollment.type == 'StudentEnrollment':
+                if enrollment.user['name'] != 'Test Student' and enrollment.enrollment_state == 'active' and enrollment.type == 'StudentEnrollment':
                     print(f"add intern {metadata['intern']} for user {enrollment.user['name']} - {enrollment.user['id']}")
                     column_data.append(
                         {
