@@ -28,7 +28,7 @@ if __name__ == "__main__":
         enrollments = section.get_enrollments()
         time.sleep(.125)
         for enrollment in enrollments:
-           if enrollment.user['name'] != "Test Student" and enrollment.enrollment_state == 'active' and enrollment.type == 'StudentEnrollment':
+            if enrollment.enrollment_state == 'active' and enrollment.type == 'StudentEnrollment':
                enrollment_dict = {
                     enrollment.user['id']: {
                         'user_name': enrollment.user['name'],

@@ -28,13 +28,15 @@ if __name__ == "__main__":
     groupset_id = int(input("Enter group set id: "))
     groupset = canvas.get_group_category(groupset_id)
     groups = groupset.get_groups()
+
     for group in groups:
         memberships = group.get_memberships()
         group_members = set([int(member.user_id) for member in memberships])
         sectionid = int(group.description)  #sectionid stored in group description field
         section = course.get_section(sectionid)
         enrollments = section.get_enrollments()
-        section_members = set([int(enrollment.user_id) for enrollment in enrollments if enrollment.type == 'StudentEnrollment' and enrollment.enrollment_state == 'active'])
+        section_members = set([int(enrollment.user_id) for enrollment in enrollments
+                               if enrollment.type == 'StudentEnrollment' and enrollment.enrollment_state == 'active'])
         if section_members == group_members:
             print(f"{group.name} -> OK")
         for user_id in (section_members - group_members):

@@ -64,6 +64,19 @@ if __name__ == "__main__":
     dayDelta = dt.timedelta(days=1)
     minDelta = dt.timedelta(minutes=1)
 
+    offsetInput = input("enter offset, like 1d or -30m (ENTER = 0m): ")
+    if offsetInput = '':
+        offsetInput = '0d'
+    offsetUnit = offsetInput[-1]  # d or m
+    offsetAmt = int(offsetInput[:-1])  # how many d or m
+
+    if offsetUnit == 'd':
+        offset = dayDelta * offsetAmt
+    elif offsetUnit = 'm':
+        offset = minDelta * offsetAmt
+    else:
+        offset = 0 * dayDelta
+
     for d in range(7):
         assignment_date = start_date + (dayDelta * d)
         isoDOW = assignment_date.isoweekday()
@@ -72,7 +85,7 @@ if __name__ == "__main__":
             sectionTime = filtered_sections[section]['time']
             sectionDay = filtered_sections[section]['day']
             assignment_date_time_str = assignment_date.strftime("%Y-%m-%d " + sectionTime)
-            assignment_date_time = dt.datetime.strptime(assignment_date_time_str, '%Y-%m-%d %H:%M') # - (MIN_DUE * minDelta)
+            assignment_date_time = dt.datetime.strptime(assignment_date_time_str, '%Y-%m-%d %H:%M') + (offset)
             print(f'Created override for "{section}" {sectionTime} {sectionDay} -> DUE DATE/TIME {assignment_date_time} assignment: {assignmentID} SECTIONID: {course_sections[section]}')
             assignment.create_override(
                 assignment_override={

@@ -24,7 +24,7 @@ if __name__ == "__main__":
         print(section)
         enrollments = section.get_enrollments()
         for enrollment in enrollments:
-            if not enrollment.user['id'] == 125495 and not enrollment.limit_privileges_to_course_section == section_limited and enrollment.type == 'StudentEnrollment':  # do not change test student or students who are already limited
+            if not enrollment.limit_privileges_to_course_section == section_limited and enrollment.type == 'StudentEnrollment' and enrollment.enrollment_state == 'active':  # do not change test student or students who are already limited
                 print(f"    changing {enrollment.user['name']} {enrollment.user['id']} limited:{enrollment.limit_privileges_to_course_section}->{section_limited}")
                 time.sleep(.25)
                 section.enroll_user(
