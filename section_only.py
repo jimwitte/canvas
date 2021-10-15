@@ -18,14 +18,21 @@ if __name__ == "__main__":
 
     print(course)
     print("change enrollments to section-only")
+
     sections = course.get_sections()
-    section_limited = True
+    section_limited = True  # desired state is to limit to section
+
     for section in sections:
-        print(section)
+        print(section) # print name and id of section
         enrollments = section.get_enrollments()
         for enrollment in enrollments:
-            if not enrollment.limit_privileges_to_course_section == section_limited and enrollment.type == 'StudentEnrollment' and enrollment.enrollment_state == 'active':  # do not change test student or students who are already limited
-                print(f"    changing {enrollment.user['name']} {enrollment.user['id']} limited:{enrollment.limit_privileges_to_course_section}->{section_limited}")
+            if (not enrollment.limit_privileges_to_course_section == section_limited
+                    and enrollment.type == 'StudentEnrollment'
+                    and enrollment.enrollment_state == 'active'):
+                # print enrollment change
+                print(
+                    f"    changing {enrollment.user['name']} {enrollment.user['id']} "
+                    f"{enrollment.limit_privileges_to_course_section}->{section_limited}")
                 time.sleep(.25)
                 section.enroll_user(
                     user=enrollment.user['id'],
@@ -33,5 +40,3 @@ if __name__ == "__main__":
                         'limit_privileges_to_course_section': section_limited
                     }
                 )
-    print()
-    print()
