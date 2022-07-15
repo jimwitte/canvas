@@ -1,5 +1,0 @@
-export API_URL="https://canvas.illinois.edu"
-export API_KEY="APIKEYHERE"
-export MIN_DUE=0
-export CANVAS_COURSE_ID=courseIDnumber
-export SECTIONS_FILE="sample_sections.yml"

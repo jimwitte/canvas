@@ -1,0 +1,4 @@
+canvasapi
+faker
+lxml
+python-dotenv

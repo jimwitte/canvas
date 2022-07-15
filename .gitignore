@@ -2,4 +2,5 @@
 /*.idea
 *.csv
 old
-
+.vscode
+__pycache__
