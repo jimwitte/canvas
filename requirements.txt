@@ -2,3 +2,6 @@ canvasapi
 faker
 lxml
 python-dotenv
+Jinja2
+jinja2-time
+
