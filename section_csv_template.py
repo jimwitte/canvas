@@ -16,6 +16,18 @@ def getFakeData(dataType):
     elif dataType == 'las399':
         return random.choice(['399A','399B','399C','399D','399E'])
 
+def prettyDayOfWeek(dow):
+    daysOfTheWeek = {
+        'M': 'Mon',
+        'T': 'Tue',
+        'W': 'Wed',
+        'R': 'Thu',
+        'F': 'Fri',
+        'S': 'Sat',
+        'SU': 'Sun'
+    }
+    return daysOfTheWeek.get(dow,'')
+
 course = {}
 course['year'] = input("Year [2022]: ") or "2022"
 course['term'] = input("Term [FALL]: ") or "FALL"
@@ -32,7 +44,7 @@ sections = explorer.get_course(course)
 csv_output_filename = f"{course['rubric']}{course['number']}{course['term']}{course['year']}_sections.csv"
 
 with open(csv_output_filename, 'w', newline='') as csvfile:
-    fieldnames = ['rubric','sectionName','crn','canvasSectionName','location','day','start','internName','internEmail','399Section']
+    fieldnames = ['rubric','sectionName','paddedSectionName','crn','canvasSectionName','bldg','room','day','prettyDay','start','internName','internEmail','399Section']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for section in sections:
@@ -40,10 +52,14 @@ with open(csv_output_filename, 'w', newline='') as csvfile:
             {
                 'rubric': section['rubric'], 
                 'sectionName': section['section'],
+                'paddedSectionName': f"{str(section['section']).zfill(2)}",
                 'crn': section['crn'],
                 'canvasSectionName': f"{section['rubric']} {section['section']} {section['term']} {section['year']} CRN{section['crn']}",
-                'location': f"{section['meetings'][0]['buildingName']} {section['meetings'][0]['roomNumber']}",
+                # 'location': f"{section['meetings'][0]['buildingName']} {section['meetings'][0]['roomNumber']}",
+                'bldg': f"{section['meetings'][0]['buildingName']}",
+                'room': f"{section['meetings'][0]['roomNumber']}",
                 'day': section['meetings'][0]['daysOfTheWeek'],
+                'prettyDay': prettyDayOfWeek(section['meetings'][0]['daysOfTheWeek']),
                 'start': section['meetings'][0]['startTime'],
                 'internName': getFakeData('name'),
                 'internEmail': getFakeData('email'),
